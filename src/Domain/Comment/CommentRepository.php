@@ -43,13 +43,13 @@ class CommentRepository extends AbstractRepository
     public function findPartial(int $id): ?Comment
     {
         return $this->createQueryBuilder('c')
-            ->select('partial c.{id, username, email, content, createdAt}, partial u.{id, username, email}')
+            ->select('partial c.{id, username, email, content, target, createdAt}, partial u.{id, username, email}')
             ->where('c.id = :id')
             ->leftJoin('c.author', 'u')
             ->setParameter('id', $id)
             ->setMaxResults(1)
             ->getQuery()
-            ->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true)
+            // ->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true)
             ->getOneOrNullResult();
     }
 
